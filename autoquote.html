@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoQuote</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .logo {
+            font-size: 40px;
+            font-weight: bold;
+            color: #f4b400;
+        }
+        .logo span {
+            color: #00bfa6;
+        }
+        .btn {
+            background-color: #00bfa6;
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #009f8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">Auto<span>Quote</span></div>
+    <form action="/run" method="post">
+        <button type="submit" class="btn">Iniciar robô</button>
+    </form>
+</body>
+</html>

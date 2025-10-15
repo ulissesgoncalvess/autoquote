@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex">
+  <aside class="w-64 bg-gray-900 text-white min-h-screen p-6">
+    <h2 class="text-2xl font-semibold mb-8">AutoQuote</h2>
+    <nav>
+      <ul>
+        <li class="mb-4"><a href="#" class="hover:text-blue-400">Dashboard</a></li>
+        <li class="mb-4"><a href="#" class="hover:text-blue-400">Cotações</a></li>
+        <li class="mb-4"><a href="#" class="hover:text-blue-400">Histórico</a></li>
+        <li class="mb-4"><a href="{{ url_for('auth.logout') }}" class="hover:text-blue-400">Sair</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main class="flex-1 p-10">
+    <h1 class="text-3xl font-bold mb-6">Bem-vindo, {{ user }}</h1>
+    <div class="grid grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <h3 class="text-lg font-semibold mb-2">Execuções</h3>
+        <p class="text-2xl font-bold text-blue-600">12</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <h3 class="text-lg font-semibold mb-2">Relatórios</h3>
+        <p class="text-2xl font-bold text-green-600">5</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow text-center">
+        <h3 class="text-lg font-semibold mb-2">Status</h3>
+        <p class="text-2xl font-bold text-yellow-600">Rodando</p>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

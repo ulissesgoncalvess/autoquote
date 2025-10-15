@@ -1,0 +1,16 @@
+services:
+  autoquote-app:
+    build: .
+    container_name: autoquote-app
+    ports:
+      - "5020:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - autoquote-network
+
+networks:
+  autoquote-network:
+    driver: bridge

@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # 🎯 APLICAÇÃO PRINCIPAL AUTOQUOTE
+  autoquote-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: autoquote-app
+    ports:
+      - "5020:5000"  # 📍 PORTA: 5020 (externa) → 5000 (container)
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=AutoQuote-Secret-Key-2024
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app                           # 📁 Desenvolvimento: código fonte
+      - ./logs:/app/logs                 # 📊 Logs da aplicação
+      - ./data:/app/data                 # 💾 Dados persistentes (planilhas)
+    networks:
+      - autoquote-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 🗄️ BANCO DE DADOS (OPCIONAL - PARA FUTURO)
+  autoquote-db:
+    image: postgres:15
+    container_name: autoquote-db
+    environment:
+      - POSTGRES_DB=autoquote_db
+      - POSTGRES_USER=autoquote_user
+      - POSTGRES_PASSWORD=AutoQuote2024
+    ports:
+      - "5433:5432"  # 📍 PORTA: 5433 (externa) → 5432 (container)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - autoquote-network
+    restart: unless-stopped
+    profiles: ["database"]  # ⚠️ Sobe apenas se especificado
+
+  # 📊 PGADMIN (OPCIONAL - PARA ADMINISTRAÇÃO)
+  autoquote-pgadmin:
+    image: dpage/pgadmin4
+    container_name: autoquote-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@autoquote.com
+      - PGADMIN_DEFAULT_PASSWORD=AutoQuote2024
+    ports:
+      - "5050:80"  # 📍 PORTA: 5050 (externa) → 80 (container)
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - autoquote-network
+    restart: unless-stopped
+    profiles: ["admin"]  # ⚠️ Sobe apenas se especificado
+
+# 🌐 REDE
+networks:
+  autoquote-network:
+    driver: bridge
+    name: autoquote-network
+
+# 💾 VOLUMES PERSISTENTES
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local

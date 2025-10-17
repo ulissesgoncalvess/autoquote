@@ -1,0 +1,21 @@
+# 🎯 CORE FRAMEWORK
+Flask==2.3.3
+Flask-Session==0.5.0
+gunicorn==21.2.0
+python-dotenv==1.0.0
+Werkzeug==2.3.7
+
+# 🗄️ BANCO DE DADOS (RESERVADO PARA FUTURO USO)
+# psycopg2-binary==2.9.7
+# Flask-SQLAlchemy==3.1.1
+# Flask-Migrate==4.0.0
+
+# 🤖 ROBÔ VALE (SELENIUM)
+selenium==4.15.0
+openpyxl==3.1.2
+Pillow==10.1.0
+requests==2.31.0
+
+# 📊 UTILITÁRIOS
+pandas==2.2.3
+numpy==2.2.1

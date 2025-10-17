@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">AutoQuote</h1>
+                    <p class="text-gray-600">Bem-vindo, {{ user.nome }}!</p>
+                </div>
+                <a href="{{ url_for('auth.logout') }}" 
+                   class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                    Sair
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                        <i class="bi bi-robot text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Execuções</h3>
+                        <p class="text-2xl font-bold text-gray-900" id="total-execucoes">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-green-100 text-green-600">
+                        <i class="bi bi-file-earmark-excel text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Relatórios</h3>
+                        <p class="text-2xl font-bold text-gray-900" id="total-relatorios">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                        <i class="bi bi-activity text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Status</h3>
+                        <p class="text-lg font-bold" id="status-geral">🟢 Online</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Robô Vale Card -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">🤖 Robô de Coleta Vale</h2>
+                <button id="btn-executar-robo" 
+                        class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors">
+                    <i class="bi bi-play-fill mr-2"></i>
+                    Executar Robô
+                </button>
+            </div>
+
+            <!-- Status do Robô -->
+            <div id="robo-status-card" class="border rounded-lg p-4 bg-gray-50">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-lg font-semibold">Status da Execução</h3>
+                    <span id="status-badge" class="px-3 py-1 rounded-full text-sm bg-gray-200 text-gray-800">
+                        Aguardando
+                    </span>
+                </div>
+                
+                <!-- Barra de Progresso -->
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
+                    <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all" style="width: 0%"></div>
+                </div>
+                
+                <!-- Mensagem -->
+                <div id="status-message" class="text-gray-600">Pronto para executar</div>
+            </div>
+        </div>
+
+        <!-- Resultado / Download -->
+        <div id="resultado-download" class="mt-6 bg-white rounded-lg shadow p-6 hidden">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800">📄 Planilha Gerada</h3>
+                    <p class="text-gray-600">O robô concluiu a coleta e gerou um relatório Excel.</p>
+                </div>
+                <a id="download-btn"
+                   href="/vale/download"
+                   class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors">
+                    <i class="bi bi-download mr-2"></i>
+                    Baixar Planilha
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const btnExecutar = document.getElementById('btn-executar-robo');
+    const statusBadge = document.getElementById('status-badge');
+    const progressBar = document.getElementById('progress-bar');
+    const statusMessage = document.getElementById('status-message');
+    const resultadoDownload = document.getElementById('resultado-download');
+
+    function atualizarStatus() {
+        fetch('/vale/status')
+            .then(response => response.json())
+            .then(data => {
+                if (data.executando) {
+                    statusBadge.textContent = '🟡 Executando';
+                    statusBadge.className = 'px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800';
+                    btnExecutar.disabled = true;
+                    progressBar.style.width = data.progresso + '%';
+                    resultadoDownload.classList.add('hidden');
+                } else {
+                    statusBadge.textContent = '🟢 Pronto';
+                    statusBadge.className = 'px-3 py-1 rounded-full text-sm bg-green-100 text-green-800';
+                    btnExecutar.disabled = false;
+                    progressBar.style.width = '100%';
+
+                    // Mostrar botão de download se o arquivo existir
+                    if (data.planilha_disponivel) {
+                        resultadoDownload.classList.remove('hidden');
+                    }
+                }
+                statusMessage.textContent = data.mensagem;
+            });
+    }
+
+    btnExecutar.addEventListener('click', function() {
+        const data = prompt('Digite a data no formato DDMMAA:');
+        if (data && data.length === 6) {
+            fetch('/vale/executar', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({data_coleta: data})
+            });
+        }
+    });
+
+    setInterval(atualizarStatus, 2000);
+    atualizarStatus();
+});
+</script>
+{% endblock %}

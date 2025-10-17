@@ -1,0 +1,32 @@
+2025-10-17 02:43:19,356 [INFO] ✅ AutoQuote aplicação iniciada.
+2025-10-17 02:43:19,389 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.20.0.2:5000
+2025-10-17 02:43:19,390 [INFO] [33mPress CTRL+C to quit[0m
+2025-10-17 02:43:19,401 [INFO]  * Restarting with stat
+2025-10-17 02:43:19,950 [INFO] ✅ AutoQuote aplicação iniciada.
+2025-10-17 02:43:19,969 [WARNING]  * Debugger is active!
+2025-10-17 02:43:19,972 [INFO]  * Debugger PIN: 104-672-158
+2025-10-17 02:43:31,615 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:31] "[32mGET / HTTP/1.1[0m" 302 -
+2025-10-17 02:43:31,699 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:31] "GET /login HTTP/1.1" 200 -
+2025-10-17 02:43:31,785 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:31] "GET /static/css/custom.css HTTP/1.1" 200 -
+2025-10-17 02:43:44,068 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:44] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-10-17 02:43:44,108 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:44] "GET /dashboard HTTP/1.1" 200 -
+2025-10-17 02:43:44,193 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:44] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+2025-10-17 02:43:44,426 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:44] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:43:46,418 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:46] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:43:56,185 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:56] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:43:56,189 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:56] "POST /vale/executar HTTP/1.1" 200 -
+2025-10-17 02:43:56,411 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:56] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:43:58,406 [INFO] 172.20.0.1 - - [17/Oct/2025 02:43:58] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:44:00,431 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:00] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:44:02,436 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:02] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:44:04,415 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:04] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:44:06,422 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:06] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:44:08,409 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:08] "GET /vale/status HTTP/1.1" 200 -
+2025-10-17 02:44:08,616 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:08] "[35m[1mGET /vale/download HTTP/1.1[0m" 500 -
+2025-10-17 02:44:08,652 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:08] "GET /vale/download?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-10-17 02:44:08,657 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:08] "GET /vale/download?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-10-17 02:44:08,724 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:08] "GET /vale/download?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-10-17 02:44:08,782 [INFO] 172.20.0.1 - - [17/Oct/2025 02:44:08] "[36mGET /vale/download?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
